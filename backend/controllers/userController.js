@@ -1,42 +1,20 @@
 const db = require("../db");
+ const AppError = require('../utils/AppError');
+// Dummy users array (database ki jagah temporary)
+let users = [
+  { id: 1, name: "Vivek", email: "vivek@test.com" },
+  { id: 2, name: "Rahul", email: "rahul@test.com" }
+];
 
-const getUsers = (req, res) => {
-  const sql = "SELECT * FROM users";
-
-  db.query(sql, (err, result) => {
-    if (err) {
-      return res.status(500).json({
-        error: err.message,
-      });
-    }
-
-    res.json(result);
-  });
+exports.getAllUsers = (req, res, next) => {
+  if (!user) throw new AppError("User not found2", 404);
+  res.status(200).json(users);
 };
 
-const storeUser = (req, res) => {
-  const { name } = req.body;
+exports.getUserById = (req, res, next) => {
+  const id = Number(req.params.id);
+  const user = users.find(u => u.id === id);
 
-  if (!name) {
-    return res.status(422).json({
-      message: "Name is required",
-    });
-  }
-
-  const sql = "INSERT INTO users (name) VALUES (?)";
-
-  db.query(sql, [name], (err, result) => {
-    if (err) {
-      return res.status(500).json({
-        error: err.message,
-      });
-    }
-
-    res.status(201).json({
-      message: "User created!",
-      userId: result.insertId,
-    });
-  });
+ if (!user) throw new AppError("User not found2", 404);
+  res.status(200).json(user);
 };
-
-module.exports = { getUsers, storeUser };
