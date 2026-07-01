@@ -1,4 +1,19 @@
-const db = require("../db");
+// const db = require("../db");
+
+const User = require('../models/userModel');
+
+exports.createUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const user = await User.create({ name, email, password });
+
+  res.status(201).json({
+    status: 'success',
+    data: user
+  });
+};
+
+
  const AppError = require('../utils/AppError');
 // Dummy users array (database ki jagah temporary)
 let users = [
