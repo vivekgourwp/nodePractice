@@ -1,35 +1,46 @@
-// const db = require("../db");
-
 const User = require('../models/userModel');
+const AppError = require('../utils/AppError');
+const catchAsync = require('../utils/catchAsync');
 
-exports.createUser = async (req, res) => {
+
+exports.createUser = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
-
   const user = await User.create({ name, email, password });
-
   res.status(201).json({
     status: 'success',
     data: user
   });
-};
+});
 
-
- const AppError = require('../utils/AppError');
-// Dummy users array (database ki jagah temporary)
-let users = [
-  { id: 1, name: "Vivek", email: "vivek@test.com" },
-  { id: 2, name: "Rahul", email: "rahul@test.com" }
-];
-
-exports.getAllUsers = (req, res, next) => {
-  if (!user) throw new AppError("User not found2", 404);
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
   res.status(200).json(users);
-};
+});
 
-exports.getUserById = (req, res, next) => {
-  const id = Number(req.params.id);
-  const user = users.find(u => u.id === id);
-
- if (!user) throw new AppError("User not found2", 404);
+exports.getUserById = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new AppError("User not found", 404);
   res.status(200).json(user);
-};
+});
+
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+  if (!user) throw new AppError("User not found", 404);
+  res.status(200).json({
+    status: 'success',
+    data: user
+  });
+});
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+  if (!user) throw new AppError("User not found", 404);
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
+});
