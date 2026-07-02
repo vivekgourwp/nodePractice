@@ -1,19 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.log("MongoDB connection error:", err));
-
-// const db = require('./db');
 const userRoutes = require("./routes/userRoutes");
 const healthRoutes = require("./routes/healthRoutes");
 const cors = require("cors");
-// db();
-
 const app = express();
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -28,13 +20,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/info", (req, res) => {
-  res.json({ appName: process.env.AppName, port: process.env.DB_PORT });
+  res.json({ appName: process.env.AppName, port: process.env.PORT });
 });
 
 // Error handlar
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || 'error';
+  err.status = err.status || "error";
 
   if (err.code === 11000) {
     err.message = "Email already exists";
@@ -42,17 +34,36 @@ app.use((err, req, res, next) => {
   }
 
   if (err.name === "ValidationError") {
-    const messages = Object.values(err.errors).map(el => el.message);
+    const messages = Object.values(err.errors).map((el) => el.message);
     err.message = messages.join(". ");
     err.statusCode = 400;
   }
 
   res.status(err.statusCode).json({
     status: err.status,
-    message: err.message
+    message: err.message,
   });
 });
 
-app.listen(process.env.DB_PORT, () => {
-  console.log("Server running on port 5000");
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log("Server running on port ",process.env.PORT );
+    });
+    console.log("MongoDB connected successfully");
+  })
+  .catch((err) => {
+    console.log("MongoDB connection error:", err);
+    process.exit(1); // app ko crash kara do, kyunki DB ke bina app useless hai
+  });
+
+mongoose.connection.on("error", (err) => {
+  console.log("MongoDB connection error (after initial connect):", err);
 });
+
+mongoose.connection.on("disconnected", () => {
+  console.log("MongoDB disconnected");
+});
+
