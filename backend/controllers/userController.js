@@ -24,16 +24,26 @@ exports.getUserById = catchAsync(async (req, res, next) => {
 });
 
 
+// exports.updateUser = catchAsync(async (req, res, next) => {
+//   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true
+//   });
+//   if (!user) throw new AppError("User not found", 404);
+//   res.status(200).json({
+//     status: 'success',
+//     data: user
+//   });
+// });
+
 exports.updateUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
+  const user = await User.findById(req.params.id);
   if (!user) throw new AppError("User not found", 404);
-  res.status(200).json({
-    status: 'success',
-    data: user
-  });
+  
+  Object.assign(user, req.body);
+  await user.save();
+  
+  res.status(200).json({ status: 'success', data: user });
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {

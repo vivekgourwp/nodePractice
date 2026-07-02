@@ -34,20 +34,22 @@ app.get("/info", (req, res) => {
 // Error handlar
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
+  err.status = err.status || 'error';
+
   if (err.code === 11000) {
     err.message = "Email already exists";
     err.statusCode = 400;
   }
+
   if (err.name === "ValidationError") {
-    const messages = Object.values(err.errors).map((el) => el.message);
+    const messages = Object.values(err.errors).map(el => el.message);
     err.message = messages.join(". ");
     err.statusCode = 400;
   }
 
   res.status(err.statusCode).json({
     status: err.status,
-    message: err.message,
+    message: err.message
   });
 });
 
