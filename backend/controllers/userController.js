@@ -23,6 +23,12 @@ exports.getUserById = catchAsync(async (req, res, next) => {
   res.status(200).json(user);
 });
 
+exports.getUserByEmail = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.params.email });
+  if (!user) throw new AppError("User not found", 404);
+  res.status(200).json(user);
+});
+
 
 // exports.updateUser = catchAsync(async (req, res, next) => {
 //   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
