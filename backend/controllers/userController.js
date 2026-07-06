@@ -2,6 +2,14 @@ const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
+exports.getUserProfile = catchAsync(async (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Protected route accessed successfully!',
+    user: req.user,
+  });
+});
+
 
 exports.createUser = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
