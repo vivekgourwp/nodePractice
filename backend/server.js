@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
 const healthRoutes = require("./routes/healthRoutes");
+const todoRoutes = require('./routes/todoRoutes');
 const cors = require("cors");
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(
 app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/health", healthRoutes);
-
+app.use("/api/todos",todoRoutes);
 app.get("/", (req, res) => {
   res.send("Backend running");
 });

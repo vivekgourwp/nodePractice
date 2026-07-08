@@ -7,7 +7,7 @@ const { getAllUsers, getUserById,getUserByEmail, createUser, updateUser, deleteU
 const { register, login } = require("../controllers/authController");
 router.get('/profile',protect,getUserProfile);
 router.post('/', createUser);
-router.use(protect);
+// router.use(protect);
 router.get('/', getAllUsers);
 router.get('/email/:email', getUserByEmail);
 router.get('/:id', getUserById);
