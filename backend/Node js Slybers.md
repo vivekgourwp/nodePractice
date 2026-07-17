@@ -1,3 +1,43 @@
+
+
+
+
+
+LinkedIn link 
+https://www.linkedin.com/in/vivekgourr
+
+Github link
+https://github.com/vivekgourwp
+
+
+
+Applyed jobs
+
+
+https://exotel.com/
+Location: Bengaluru, Karnataka, India
+
+
+
+
+One project I worked on involved building a custom e-commerce platform where the client needed a system that could efficiently manage products, orders, and customer interactions while integrating with third-party APIs.
+My role was as a Full Stack Developer. I developed custom backend features, built and integrated REST APIs, optimized database queries. I also fixed performance bottlenecks and resolved production issues to improve the overall user experience.
+The project was delivered successfully and met the client's functional and performance requirements.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Node.js Complete Syllabus
 
 Day 1 → Introduction & Setup
@@ -284,3 +324,127 @@ Day 22 (MySQL Advanced - joins, transactions)
 Day 23-26 (dusra DB - jo use nahi kar rahe)
 Day 33-36 (Refresh tokens, roles, Helmet, rate limiting)
 Day 37-45 saara Phase 5 (Multer, Nodemailer, Socket.io, Redis, Testing, Deployment) — ye sab "nice to have", interview mein basic awareness kaafi hai, deep nahi chahiye abhi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# React Interview Prep Checklist
+
+> Based on: Node.js complete ✅ | Next.js production experience (votive-erp) ✅
+> Goal: Cover gaps systematically before/while applying to interviews
+
+---
+
+## TIER 1 — Must Know (Core Fundamentals)
+
+### Components & JSX
+- [ ] Functional vs Class components (functional-first, class ka basic idea)
+- [ ] JSX rules — `className` vs `class`, single root element, expressions in `{}`
+
+### Hooks
+- [ ] `useState` — deep understanding (already used ✅)
+- [ ] `useEffect` — dependency array behavior:
+  - [ ] Empty `[]` → runs once
+  - [ ] No array → runs every render
+  - [ ] With values → runs on value change
+  - [ ] Cleanup function — kab aur kyun chahiye
+- [ ] `useContext` — global state simple use case
+- [ ] `useRef` — DOM access + "no re-render trigger" concept
+- [ ] Custom Hooks — kaise banate hain, kyun (reusability)
+
+### Props vs State
+- [ ] Difference clearly explain (data flow: parent → child via props, state = component ke andar)
+- [ ] Prop drilling problem + solution (Context / state management)
+
+### Component Lifecycle
+- [ ] Mounting / Updating / Unmounting via `useEffect`
+
+---
+
+## TIER 2 — Should Know (Mid-Level Expected)
+
+### State Management
+- [ ] Context API — kab use karein, kab NAHI (performance concerns)
+- [ ] Redux/Zustand — basic concept (single source of truth, actions/reducers)
+
+### Performance Optimization
+- [ ] `React.memo` — kab use karna hai
+- [ ] `useMemo` — kab use karna hai
+- [ ] `useCallback` — kab use karna hai
+- [ ] Over-using these = bhi ek problem (bolna impressive lagta hai)
+- [ ] Unnecessary re-renders — identify + prevent
+
+### Forms & Events
+- [ ] Controlled vs Uncontrolled components
+  - Real example: Employee Management multi-step form (votive-erp)
+- [ ] Event handling, synthetic events basics
+
+### Routing
+- [ ] React Router basics (concept-level)
+- [ ] Next.js file-based routing (already used — explain confidently)
+
+### API Integration
+- [ ] `fetch` / `axios` patterns
+- [ ] Loading / error state handling
+- [ ] Common `useEffect` + API call pattern
+
+---
+
+## TIER 3 — Good to Know (Next.js Advantage 🎯)
+
+- [ ] SSR vs CSR vs SSG (Next.js core selling point)
+- [ ] File-based routing, dynamic routes (`[id].js`)
+- [ ] API routes in Next.js
+- [ ] `NEXT_PUBLIC_` env variables (already used ✅)
+- [ ] `next/image` — image optimization
+
+---
+
+## Common "Gotcha" Interview Questions
+
+- [ ] Q: State update turant console.log me kyun nahi dikhta?
+      → A: Batching / asynchronous state updates
+- [ ] Q: `useEffect` me dependency array missing/wrong ho to?
+      → A: Infinite loop risk / stale closures
+- [ ] Q: Lists me `key` prop kyun zaroori hai?
+      → A: Reconciliation; index ko key banana bad practice kyun hai
+- [ ] Q: Virtual DOM kya hai, real DOM se better kyun?
+
+---
+
+## Prep Strategy
+
+1. Har topic ko **votive-erp se ek real example** ke saath connect karo
+2. Jo nahi aata, honestly bolo + turant bridge karo apni strength ki taraf
+3. Tier 1 = non-negotiable (interview-breaker agar miss hua)
+4. Tier 3 = tumhara extra edge (zyada candidates Next.js deeply nahi jaante)
+5. Daily 1–1.5 hrs — applications ke parallel, sequential nahi
+
+---
+
+## My votive-erp Examples Bank (fill this as you go)
+
+| React Concept | My Real Example |
+|---|---|
+| Controlled components | Employee Management multi-step form |
+| useState | |
+| useEffect | |
+| Next.js routing | |
+| API integration | |
+| Env variables | `NEXT_PUBLIC_API_URL` |
