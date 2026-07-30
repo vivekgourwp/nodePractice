@@ -1,18 +1,14 @@
 import { useState,useEffect } from "react";
 
-function Counter2() {
-  const [count2, setCount2] = useState(0);
+function useEffectTest() {
+  const [count2, setCount2] = useState(() => {
+    const saved = localStorage.getItem('count2');
+    return saved !== null ? Number(saved): 0;
+  });
 
-  useEffect(()=>{
-    alert("Use Effect is working now In counter 2",count2);
-  },[count2]);
 
   useEffect(() => {
-    document.title = `Counter: ${count2}`;
-
-    return () => {
-        document.title = `React App`
-    }
+    localStorage.setItem('count2', count2);
   },[count2]);
 
   return (
@@ -37,4 +33,4 @@ function Counter2() {
   );
 }
 
-export default Counter2;
+export default useEffectTest;
