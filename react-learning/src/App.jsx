@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 
 function App() {
+  const [searchTerm, setsearchTerm] = useState("");
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const isFirstRender = useRef(true);
@@ -35,12 +36,23 @@ function App() {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
+    // ✅ Filtering — yeh render ke andar, directly, bina useEffect ke
+  const filteredTodos = todos.filter((t) =>
+    t.text.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <h2>Hello world</h2>
       <input value={todo} onChange={(e) => setTodo(e.target.value)} />
       <button onClick={addTodo}>Add Todo</button>
       <button onClick={clearTodo}>Clear Todo</button>
+      
+      <hr style={{ margin: "20px 0", border: "1px solid #ccc" }} />
+      <input value={searchTerm} onChange={(e) => setsearchTerm(e.target.value)} 
+              placeholder="Search todos..."/>
+      
+
 
       {/* {todos.length === 0 && <p>No todos yet. Add one!</p>}
       {todos.length === 1 && <p>You have 1 todo</p>}
@@ -52,8 +64,12 @@ function App() {
           ? "You have 1 todo"
           : `You have ${todos.length} todos`}
       </p>
-      <ul>
-        {todos.map((todo) => (
+      {searchTerm && filteredTodos.length === 0 && todos.length > 0 && (
+        <p>No matching todos found</p>
+      )}
+
+       <ul>
+        {filteredTodos.map((todo) => (
           <li key={todo.id}>{todo.text}</li>
         ))}
       </ul>
