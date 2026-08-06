@@ -3,80 +3,26 @@
 import { useEffect, useState, useRef } from "react";
 
 function App() {
-  const [searchTerm, setsearchTerm] = useState("");
-  const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([]);
-  const isFirstRender = useRef(true);
+  const [name, setName] = useState("");
 
-  const addTodo = () => {
-    if (!todo.trim()) return;
-    setTodos([...todos, { id: Date.now(), text: todo, completed: false }]);
-    setTodo("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(name);
   };
-
-  const clearTodo = () => {
-    setTodos([]);
-    localStorage.removeItem("todos");
-  };
-
-  // ✅ Load effect (declaration order se koi farak nahi padta ab, guard ki wajah se)
-  useEffect(() => {
-    const savedTodos = localStorage.getItem("todos");
-    if (savedTodos) {
-      setTodos(JSON.parse(savedTodos));
-    }
-  }, []);
-
-  // ✅ Save effect — pehli render pe SKIP karega
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;   // pehli baar save mat karo, sirf load hone do
-    }
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-    // ✅ Filtering — yeh render ke andar, directly, bina useEffect ke
-  const filteredTodos = todos.filter((t) =>
-    t.text.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <>
-      <h2>Hello world</h2>
-      <input value={todo} onChange={(e) => setTodo(e.target.value)} />
-      <button onClick={addTodo}>Add Todo</button>
-      <button onClick={clearTodo}>Clear Todo</button>
-      
-      <hr style={{ margin: "20px 0", border: "1px solid #ccc" }} />
-      <input value={searchTerm} onChange={(e) => setsearchTerm(e.target.value)} 
-              placeholder="Search todos..."/>
-      
-
-
-      {/* {todos.length === 0 && <p>No todos yet. Add one!</p>}
-      {todos.length === 1 && <p>You have 1 todo</p>}
-      {todos.length > 1 && <p>You have {todos.length} todos </p>} */}
-      <p>
-        {todos.length === 0
-          ? "No todos yet. Add one!"
-          : todos.length === 1
-          ? "You have 1 todo"
-          : `You have ${todos.length} todos`}
-      </p>
-      {searchTerm && filteredTodos.length === 0 && todos.length > 0 && (
-        <p>No matching todos found</p>
-      )}
-
-       <ul>
-        {filteredTodos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
-        ))}
-      </ul>
+      <h4>Controlled Components</h4>
+      <form action="" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={name}
+          onChange={(eB) => setName(eB.target.value)}           
+        />
+        <button type="submit" disabled={name.trim() === ''}>Submit</button>
+      </form>
     </>
   );
 }
 
 export default App;
-
-
