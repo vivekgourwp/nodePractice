@@ -1,12 +1,34 @@
-// import { useState } from "react";
-import ValidationForm from "./tasks/ValidationForm";
+import { useState } from "react";
 
-function App() {
+function EditInPlace() {
+  const [text, setText] = useState("Mera pehla todo!");
+  const [isEditing, setIsEditing] = useState(false);
+  const [inputValue, setInputValue] = useState(text);
+
+  const handleSave = () => {
+    setText(inputValue);      // new value save karo
+    setIsEditing(false);      // wapas text mode
+  };
+
   return (
-    <>
-    <ValidationForm/>    
-    </>
-  )
+    <div>
+      {isEditing ? (
+        <>
+          <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+          <button onClick={handleSave}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <span>{text}</span>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        </>
+      )}
+    </div>
+  );
 }
 
-export default App;
+export default EditInPlace;
