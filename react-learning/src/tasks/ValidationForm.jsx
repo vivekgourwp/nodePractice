@@ -20,6 +20,10 @@ function ValidationForm() {
       newErrors.name = 'Name required hai!';
     }
 
+    if (formData.name.length < 3) {
+      newErrors.name = 'Name length minimum 3 required';
+    }
+
     if (formData.email.trim() === '') {
       newErrors.email = 'Email required hai!';
     } else if (!formData.email.includes('@')) {
@@ -51,7 +55,7 @@ function ValidationForm() {
           onChange={handleChange}
           placeholder="Apna naam likho"
         />
-        {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
+        {errors.name && <p style={{ color: 'red', border:'1px solid red' }}>{errors.name}</p>}
       </div>
 
       <div>
@@ -62,7 +66,7 @@ function ValidationForm() {
           onChange={handleChange}
           placeholder="Email likho"
         />
-        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+        {errors.email && <p style={{ color: 'red', border:'1px solid red' }}>{errors.email}</p>}
       </div>
 
       <button type="submit">Submit</button>
