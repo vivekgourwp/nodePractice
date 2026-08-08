@@ -1,34 +1,20 @@
-import { useState } from "react";
+// App.jsx
+import { useState } from 'react';
+import { ThemeContext } from './tasks/ThemeContext';
+import Navbar from './components/Navbar';
 
-function EditInPlace() {
-  const [text, setText] = useState("Mera pehla todo!");
-  const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(text);
+function App() {
+  const [theme, setTheme] = useState('light');
 
-  const handleSave = () => {
-    setText(inputValue);      // new value save karo
-    setIsEditing(false);      // wapas text mode
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
   return (
-    <div>
-      {isEditing ? (
-        <>
-          <input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
-        </>
-      ) : (
-        <>
-          <span>{text}</span>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-        </>
-      )}
-    </div>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <Navbar />
+    </ThemeContext.Provider>
   );
 }
 
-export default EditInPlace;
+export default App;
